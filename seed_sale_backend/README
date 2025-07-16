@@ -1,0 +1,298 @@
+# ML Prediction API - Flask Backend
+
+A robust Flask REST API for serving machine learning models with support for regression predictions, batch processing, and comprehensive data preprocessing.
+
+## Features
+
+- 🔮 **ML Predictions**: Serve any scikit-learn compatible model
+- 📊 **Data Preprocessing**: Automatic handling of missing values and categorical data
+- 🚀 **Batch Processing**: Efficient handling of large datasets
+- 🔄 **Dynamic Model Loading**: Load models at runtime
+- 🛡️ **Error Handling**: Comprehensive error responses
+- 🌐 **CORS Enabled**: Ready for frontend integration
+- 📝 **Logging**: Detailed logging for debugging
+- 🏥 **Health Checks**: Monitor API status
+
+## Tech Stack
+
+- **Flask 3.0** - Modern Python web framework
+- **scikit-learn** - Machine learning library
+- **pandas** - Data manipulation and analysis
+- **numpy** - Numerical computing
+- **joblib** - Model serialization
+- **Flask-CORS** - Cross-origin resource sharing
+
+## Quick Start
+
+### Prerequisites
+
+- Python 3.12+
+- pip (Python package manager)
+
+### Installation
+
+1. **Clone or create the project:**
+   ```bash
+   mkdir seed_sale_flask_api
+   cd seed_sale_flask_api
+   ```
+
+2. **Create virtual environment:**
+   ```bash
+   python -m venv venv
+   
+   # Activate virtual environment
+   # On Windows:
+   venv\Scripts\activate
+   # On macOS/Linux:
+   source venv/bin/activate
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   pip install --upgrade pip
+   pip install -r requirements.txt
+   ```
+
+4. **Run the server:**
+   ```bash
+   python app.py
+   ```
+
+The API will be available at `http://localhost:5000`
+
+## API Endpoints
+
+### Health Check
+```http
+GET /health
+```
+
+**Response:**
+```json
+{
+  "status": "healthy",
+  "timestamp": "2024-01-15T10:30:00",
+  "model_loaded": true
+}
+```
+
+### Load Model
+```http
+POST /model/load
+```
+
+**Request:**
+```json
+{
+  "model_path": "path/to/your/model.pkl"
+}
+```
+
+### Make Predictions
+```http
+POST /predict
+```
+
+**Request:**
+```json
+{'data': [
+        {'PRODUCT': 'P140', 'SALESYEAR': 2021, 'LIFECYCLE': 'ESTABLISHED', 'STATE': 'Texas', 'RELEASE_YEAR': 2016, 'DISEASE_RESISTANCE': 0, 'INSECT_RESISTANCE': 0, 'PROTECTION': 1, 'DROUGHT_TOLERANCE': 4, 'BRITTLE_STALK': 3, 'PLANT_HEIGHT': 2, 'RELATIVE_MATURITY': 4, 'UNITS': 3.5
+        },
+        {'PRODUCT': 'P145', 'SALESYEAR': 2021, 'LIFECYCLE': 'INTRODUCTION', 'STATE': 'Texas', 'RELEASE_YEAR': 2020, 'DISEASE_RESISTANCE': 0, 'INSECT_RESISTANCE': 1, 'PROTECTION': 1, 'DROUGHT_TOLERANCE': 2, 'BRITTLE_STALK': 2, 'PLANT_HEIGHT': 1, 'RELATIVE_MATURITY': 3, 'UNITS': 0.7
+        },
+        {'PRODUCT': 'P152', 'SALESYEAR': 2021, 'LIFECYCLE': 'EXPANSION', 'STATE': 'Texas', 'RELEASE_YEAR': 2015, 'DISEASE_RESISTANCE': 0, 'INSECT_RESISTANCE': 0, 'PROTECTION': 1, 'DROUGHT_TOLERANCE': 4, 'BRITTLE_STALK': 4, 'PLANT_HEIGHT': 3, 'RELATIVE_MATURITY': 4, 'UNITS': 6.3
+        },
+        {'PRODUCT': 'P158', 'SALESYEAR': 2021, 'LIFECYCLE': 'PHASEOUT', 'STATE': 'Texas', 'RELEASE_YEAR': 2014, 'DISEASE_RESISTANCE': 0, 'INSECT_RESISTANCE': 0, 'PROTECTION': 1, 'DROUGHT_TOLERANCE': 3, 'BRITTLE_STALK': 5, 'PLANT_HEIGHT': 3, 'RELATIVE_MATURITY': 4, 'UNITS': 1.4
+        },
+        {'PRODUCT': 'P161', 'SALESYEAR': 2021, 'LIFECYCLE': 'ESTABLISHED', 'STATE': 'Texas', 'RELEASE_YEAR': 2012, 'DISEASE_RESISTANCE': 0, 'INSECT_RESISTANCE': 1, 'PROTECTION': 1, 'DROUGHT_TOLERANCE': 5, 'BRITTLE_STALK': 4, 'PLANT_HEIGHT': 4, 'RELATIVE_MATURITY': 4, 'UNITS': 8.1
+        },
+        {'PRODUCT': 'P169', 'SALESYEAR': 2021, 'LIFECYCLE': 'EXPANSION', 'STATE': 'Texas', 'RELEASE_YEAR': 2016, 'DISEASE_RESISTANCE': 0, 'INSECT_RESISTANCE': 1, 'PROTECTION': 1, 'DROUGHT_TOLERANCE': 3, 'BRITTLE_STALK': 4, 'PLANT_HEIGHT': 3, 'RELATIVE_MATURITY': 4, 'UNITS': 5.5
+        },
+        {'PRODUCT': 'P175', 'SALESYEAR': 2021, 'LIFECYCLE': 'PHASEOUT', 'STATE': 'Texas', 'RELEASE_YEAR': 2015, 'DISEASE_RESISTANCE': 0, 'INSECT_RESISTANCE': 0, 'PROTECTION': 0, 'DROUGHT_TOLERANCE': 2, 'BRITTLE_STALK': 2, 'PLANT_HEIGHT': 3, 'RELATIVE_MATURITY': 4, 'UNITS': 0.9
+        },
+        {'PRODUCT': 'P182', 'SALESYEAR': 2021, 'LIFECYCLE': 'INTRODUCTION', 'STATE': 'Texas', 'RELEASE_YEAR': 2020, 'DISEASE_RESISTANCE': 0, 'INSECT_RESISTANCE': 0, 'PROTECTION': 1, 'DROUGHT_TOLERANCE': 3, 'BRITTLE_STALK': 3, 'PLANT_HEIGHT': 2, 'RELATIVE_MATURITY': 3, 'UNITS': 1.3
+        },
+        {'PRODUCT': 'P188', 'SALESYEAR': 2021, 'LIFECYCLE': 'ESTABLISHED', 'STATE': 'Texas', 'RELEASE_YEAR': 2017, 'DISEASE_RESISTANCE': 0, 'INSECT_RESISTANCE': 1, 'PROTECTION': 1, 'DROUGHT_TOLERANCE': 5, 'BRITTLE_STALK': 5, 'PLANT_HEIGHT': 3, 'RELATIVE_MATURITY': 4, 'UNITS': 4.4
+        },
+        {'PRODUCT': 'P193', 'SALESYEAR': 2021, 'LIFECYCLE': 'EXPANSION', 'STATE': 'Texas', 'RELEASE_YEAR': 2014, 'DISEASE_RESISTANCE': 0, 'INSECT_RESISTANCE': 0, 'PROTECTION': 1, 'DROUGHT_TOLERANCE': 4, 'BRITTLE_STALK': 4, 'PLANT_HEIGHT': 2, 'RELATIVE_MATURITY': 4, 'UNITS': 2.8
+        }
+    ]
+}
+```
+
+**Response:**
+```json
+{
+  "predictions": 2.07235946 1.8712158  1.97178763 1.77064397 2.07235946 1.80705168 1.77064397 4.66509972 1.45392663 1.97178763],
+  "model_type": "regression",
+  "timestamp": "2024-01-15T10:30:00",
+  "data_points": 2
+}
+```
+
+## Testing
+
+### Using curl
+
+```bash
+# Health check
+curl http://localhost:5000/health
+
+# Make prediction
+curl -X POST http://localhost:5000/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "data": [
+      ...
+    ]
+  }'
+```
+
+### Using Python requests
+
+```python
+import requests
+
+# Make prediction
+response = requests.post('http://localhost:5000/predict', json={
+    'data': [
+       ...
+    ]
+})
+
+result = response.json()
+print(result['predictions'])
+```
+
+## Deployment
+
+### Development
+```bash
+python app.py
+```
+
+### Production with Gunicorn
+```bash
+# Install gunicorn
+pip install gunicorn
+
+# Run with multiple workers
+gunicorn -w 4 -b 0.0.0.0:5000 app:app
+
+# With logging
+gunicorn -w 4 -b 0.0.0.0:5000 --access-logfile - --error-logfile - app:app
+```
+
+### Docker Deployment
+
+Create `Dockerfile`:
+```dockerfile
+FROM python:3.12-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+EXPOSE 5000
+
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
+```
+
+Build and run:
+```bash
+docker build -t ml-flask-api .
+docker run -p 5000:5000 ml-flask-api
+```
+
+## Error Handling
+
+The API returns appropriate HTTP status codes:
+
+- **200**: Success
+- **400**: Bad request (invalid data)
+- **500**: Server error (model errors, etc.)
+
+Error response format:
+```json
+{
+  "error": "Description of the error",
+  "timestamp": "2024-01-15T10:30:00"
+}
+```
+
+## Logging
+
+The API logs:
+- Model loading events
+- Prediction requests
+- Errors and exceptions
+- Performance metrics
+
+Configure logging level in `app.py`:
+```python
+logging.basicConfig(level=logging.INFO)
+```
+
+## Performance Considerations
+
+- **Memory usage**: Models are loaded once and kept in memory
+- **Batch processing**: Use `/predict/batch` for large datasets
+- **Concurrent requests**: Use gunicorn with multiple workers
+- **Model size**: Large models may require more memory
+
+## Security
+
+For production deployment:
+- Use HTTPS
+- Implement authentication (API keys, JWT tokens)
+- Add rate limiting
+- Validate input data thoroughly
+- Use environment variables for sensitive config
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Model not loading**: Check file path and permissions
+2. **CORS errors**: Ensure Flask-CORS is installed and configured
+3. **Memory errors**: Reduce batch size or use smaller models
+4. **Import errors**: Verify all dependencies are installed
+
+### Debug Tips
+
+- Check application logs for detailed error messages
+- Use `curl` to test endpoints directly
+- Verify your model works with sample data
+- Test with small datasets first
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Add tests for new functionality
+4. Commit changes: `git commit -m 'Add feature'`
+5. Push to branch: `git push origin feature-name`
+6. Submit a pull request
+
+## License
+
+MIT License - feel free to use this project for personal or commercial purposes.
+
+## Support
+
+For issues or questions:
+- Check the troubleshooting section
+- Review application logs
+- Ensure your model is compatible with scikit-learn API
+- Verify all dependencies are installed correctly
+
+## Changelog
+
+### v1.0.0
+- Initial release
+- Basic prediction endpoint
+- Model loading functionality
+- Batch processing support
+- Health check endpoint
